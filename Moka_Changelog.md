@@ -1,6 +1,7 @@
 # CHANGELOG
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 9/12/2024
 - Adjusted the potion brewing text position to fit 3 digits
@@ -75,6 +76,8 @@
 - Merged some fixes from EggsOverEevee, such as the thermal change fix, double snowscape alolan ninetales fix, and galarian birds
 
 >>>>>>> e82852aceb (Fix again)
+=======
+>>>>>>> b222475b9f (Added a "timer" for the catching contest  in the pause menu)
 28/10/2024
 - Optimized the difficulty reward code in the menu
 - Added an indicator for pokemon spawns left for the catching contest in the pause menu

@@ -2716,6 +2716,10 @@ u16 Rogue_MiniMenuHeight(void)
     if(RogueDebug_GetConfigToggle(DEBUG_TOGGLE_INFO_PANEL))
         return Debug_MiniMenuHeight();
 #endif
+    if(Rogue_IsCatchingContestActive())
+    {
+        height = Rogue_IsRunActive() ? 4 : 1;
+    }
 
     if(Rogue_IsRunActive() && gSaveBlock2Ptr->optionsShowMoney == OPTIONS_SHOWMONEY_ON)
     {
