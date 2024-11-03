@@ -2,6 +2,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 9/12/2024
 - Adjusted the potion brewing text position to fit 3 digits
@@ -59,6 +60,8 @@
 - Added a new item, pocket PC. You can't earn it yet, though
 - Updated zippy zap description 
 
+=======
+>>>>>>> 2233aa16e7 (Added quick routes option)
 3/11/2024
 - Merged eevee's poison puppeteer related things + minor fixes
 - Added quick route option for... Quicker routes. Since making a shorter run isn't an option due to how the game expects you to defeat 14 mighty trainers, rip. It doesn't affect existing generated map however, and instead will be enforced on the next map generation
