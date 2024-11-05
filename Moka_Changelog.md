@@ -1,9 +1,4 @@
 # CHANGELOG
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 9/12/2024
 - Adjusted the potion brewing text position to fit 3 digits
 - Fixed potion cauldron not correctly reducing the berry amount during large batches of brewing
@@ -53,6 +48,8 @@
 5/11/2024
 - Added the pocket PC for real this time. Unlocked via hub upgrade
 - Added unique mon tracking inside pocket pc as an upgrade. Can be used inside adventure
+5/11/2024
+- Added the pocket PC for real this time. Unlocked via hub upgrade
 
 4/11/2024 
 - Merged yet another poison puppeteer stuff + mortal spin (kinda? I can't find it on eevee's repo)
@@ -60,8 +57,6 @@
 - Added a new item, pocket PC. You can't earn it yet, though
 - Updated zippy zap description 
 
-=======
->>>>>>> 2233aa16e7 (Added quick routes option)
 3/11/2024
 - Merged eevee's poison puppeteer related things + minor fixes
 - Added quick route option for... Quicker routes. Since making a shorter run isn't an option due to how the game expects you to defeat 14 mighty trainers, rip. It doesn't affect existing generated map however, and instead will be enforced on the next map generation
@@ -78,9 +73,6 @@
 - Fixed sylveon evo
 - Merged some fixes from EggsOverEevee, such as the thermal change fix, double snowscape alolan ninetales fix, and galarian birds
 
->>>>>>> e82852aceb (Fix again)
-=======
->>>>>>> b222475b9f (Added a "timer" for the catching contest  in the pause menu)
 28/10/2024
 - Optimized the difficulty reward code in the menu
 - Added an indicator for pokemon spawns left for the catching contest in the pause menu
