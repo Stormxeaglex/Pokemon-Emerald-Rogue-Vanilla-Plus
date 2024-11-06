@@ -21,6 +21,7 @@
 #include "malloc.h"
 #include "menu.h"
 #include "menu_helpers.h"
+#include "naming_screen.h"
 #include "money.h"
 #include "overworld.h"
 #include "palette.h"
@@ -122,6 +123,8 @@ static bool8 IsZeroPriceMarkedAsFree();
 static u32 GetShopCurrencyAmount();
 static void RemoveShopCurrencyAmount(u32 amount);
 
+static void Task_RenameHub(u8 taskId);
+
 static const struct YesNoFuncTable sShopPurchaseYesNoFuncs =
 {
     BuyMenuTryMakePurchase,
@@ -129,6 +132,13 @@ static const struct YesNoFuncTable sShopPurchaseYesNoFuncs =
 };
 
 static const struct MenuAction sShopMenuActions_BuySellQuit[] =
+{
+    { gText_ShopBuy, {.void_u8=Task_HandleShopMenuBuy} },
+    { gText_ShopSell, {.void_u8=Task_HandleShopMenuSell} },
+    { gText_ShopQuit, {.void_u8=Task_HandleShopMenuQuit} }
+};
+
+static const struct MenuAction sShopMenuActions_BuySellRenameQuit[] =
 {
     { gText_ShopBuy, {.void_u8=Task_HandleShopMenuBuy} },
     { gText_ShopSell, {.void_u8=Task_HandleShopMenuSell} },
@@ -145,12 +155,14 @@ static const struct MenuAction sShopMenuActions_BuildQuit[] =
 {
     { gText_ShopUpgrade, {.void_u8=Task_HandleShopMenuUpgrades} },
     { gText_ShopAreas, {.void_u8=Task_HandleShopMenuAreas} },
+    { gText_RenameHub, {.void_u8=Task_RenameHub} },
     { gText_ShopQuit, {.void_u8=Task_HandleShopMenuQuit} }
 };
 
 
 static const struct WindowTemplate sShopMenuWindowTemplates[] =
 {
+    //WIN_BUY_SELL_QUIT
     {
         .bg = 0,
         .tilemapLeft = 2,
@@ -160,6 +172,7 @@ static const struct WindowTemplate sShopMenuWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 0x0008,
     },
+    //WIN_BUY_QUIT
     {
         .bg = 0,
         .tilemapLeft = 2,
@@ -168,7 +181,17 @@ static const struct WindowTemplate sShopMenuWindowTemplates[] =
         .height = 4,
         .paletteNum = 15,
         .baseBlock = 0x0008,
-    }
+    },
+    //WIN_BUY_SELL_RENAME_QUIT
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 8,
+        .paletteNum = 15,
+        .baseBlock = 0x0008,
+    },
 };
 
 static const struct ListMenuTemplate sShopBuyMenuListTemplate =
@@ -329,7 +352,7 @@ static u8 CreateShopMenu(u8 martType)
     else if (martType == MART_TYPE_HUB_AREAS || martType == MART_TYPE_HUB_UPGRADES)
     {
         struct WindowTemplate winTemplate;
-        winTemplate = sShopMenuWindowTemplates[0];
+        winTemplate = sShopMenuWindowTemplates[2];
         winTemplate.width = GetMaxWidthInMenuTable(sShopMenuActions_BuildQuit, ARRAY_COUNT(sShopMenuActions_BuildQuit));
         sMartInfo.windowId = AddWindow(&winTemplate);
         sMartInfo.menuActions = sShopMenuActions_BuildQuit;
@@ -442,6 +465,16 @@ static void Task_HandleShopMenuAreas(u8 taskId)
 {
     sMartInfo.martType = MART_TYPE_HUB_AREAS;
     gTasks[taskId].func = Task_HandleShopMenuBuy;
+}
+
+static void Task_RenameHub(u8 taskId)
+{
+    DoNamingScreen(NAMING_SCREEN_POKEMON_HUB, gSaveBlock2Ptr->pokemonHubName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+static void ReturnToShopMenuFromNamingScreen(u8 taskId)
+{
+    CreateTask(Task_ReturnToShopMenu, taskId);
 }
 
 void CB2_ExitSellMenu(void)

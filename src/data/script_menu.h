@@ -860,6 +860,7 @@ static const struct MenuAction MultichoiceList_WorkbenchOptions[] =
 {
     {gText_UpgradeArea},
     {gText_ExpandArea},
+    {gText_RenameHub},
     {gText_Exit},
 };
 
