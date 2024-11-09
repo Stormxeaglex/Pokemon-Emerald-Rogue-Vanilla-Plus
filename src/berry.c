@@ -1105,6 +1105,10 @@ void BerryTreeTimeUpdate(s32 minutes)
             else
             {
                 s32 time = minutes;
+                if (BERRY_TREE_DAYCARE_FIRST <= i && i <= BERRY_TREE_DAYCARE_LAST)
+                {
+                    time *= BERRY_TREE_DAYCARE_MPLR; // speed up growth for in-run berries
+                }
 
                 while (time != 0)
                 {
@@ -1124,7 +1128,6 @@ void BerryTreeTimeUpdate(s32 minutes)
         }
     }
 }
-
 void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 allowGrowth)
 {
     struct BerryTree *tree = GetBerryTreeInfo(id);
