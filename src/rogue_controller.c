@@ -3830,7 +3830,8 @@ u16 Rogue_PostRunRewardLvls()
 
 u16 Rogue_PostRunRewardMoney()
 {
-    u16 amount = 0;
+    u32 amount = 0;
+    u32 total = 0;
 
     if(gRogueRun.enteredRoomCounter > 1)
     {
