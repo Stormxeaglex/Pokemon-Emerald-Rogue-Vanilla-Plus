@@ -182,6 +182,9 @@
 #define OPTIONS_QUICKROUTE_OFF 0
 #define OPTIONS_QUICKROUTE_ON  1
 
+#define OPTIONS_IGNOREBAG_OFF 0
+#define OPTIONS_IGNOREBAG_ON  1
+
 // Mocha additions end
 
 #define DIR_NONE        0
