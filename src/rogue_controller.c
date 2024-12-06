@@ -304,6 +304,7 @@ u16 GetEncounterChainShinyOdds(u8 count)
     {
         u16 range;
         u16 targetOdds;
+        u16 t;
         if (RoguePokedex_IsSpeciesLegendary(GetWildChainSpecies()))
         {
             range = 100 - 4; // Can't use pokeblock for this
@@ -315,7 +316,7 @@ u16 GetEncounterChainShinyOdds(u8 count)
             targetOdds = 16;
         }
 
-        u16 t = min(count - 4, range);
+        t = min(count - 4, range);
 
         return (targetOdds * t + baseOdds * (range - t)) / range;
     }
