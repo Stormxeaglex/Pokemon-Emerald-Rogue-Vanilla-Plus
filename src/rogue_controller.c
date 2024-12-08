@@ -3834,7 +3834,7 @@ u16 Rogue_PostRunRewardMoney()
 
         if(gSaveBlock2Ptr->optionsDifficultyRewardMode == OPTIONS_DIFFICULTY_REWARD_MODE_MULTIPLIER)
         {  
-            u8 multiplier = Rogue_CalculateRewardMultiplier();
+            float multiplier = Rogue_CalculateRewardMultiplier() / 10.0f;
             u8 multiplierReward = (200 * multiplier) / 2;
             amount = i * multiplierReward;
         }
