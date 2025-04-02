@@ -509,6 +509,7 @@ static const u16 sStackableCurseEffects[] = {
 
 float Rogue_CalculateRewardMultiplier()
 {
+    u8 i;
     float multiplier = 1.0; // Base multiplier
 
     // Trainer multiplier
@@ -570,7 +571,7 @@ float Rogue_CalculateRewardMultiplier()
     
     //Unstackable curses
     
-    u8 i;
+
     for(i = 0; i < ARRAY_COUNT(sStaticCurseEffects); i++)
     {
         if(IsCurseActive(sStaticCurseEffects[i]))
