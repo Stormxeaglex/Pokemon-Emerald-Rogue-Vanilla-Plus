@@ -477,11 +477,42 @@
 #define ITEM_MAGMA_EMBLEM 375
 #define ITEM_OLD_SEA_MAP 376
 
+//Start of Vanilla Extra Items
+
+// Mints
+#define ITEM_LONELY_MINT 578
+#define ITEM_ADAMANT_MINT 579
+#define ITEM_NAUGHTY_MINT 580
+#define ITEM_BRAVE_MINT 581
+#define ITEM_BOLD_MINT 582
+#define ITEM_IMPISH_MINT 583
+#define ITEM_LAX_MINT 584
+#define ITEM_RELAXED_MINT 585
+#define ITEM_MODEST_MINT 586
+#define ITEM_MILD_MINT 587
+#define ITEM_RASH_MINT 588
+#define ITEM_QUIET_MINT 589
+#define ITEM_CALM_MINT 590
+#define ITEM_GENTLE_MINT 591
+#define ITEM_CAREFUL_MINT 592
+#define ITEM_SASSY_MINT 593
+#define ITEM_TIMID_MINT 594
+#define ITEM_HASTY_MINT 595
+#define ITEM_JOLLY_MINT 596
+#define ITEM_NAIVE_MINT 597
+#define ITEM_SERIOUS_MINT 598
+
+// Ability Modifiers
+#define ITEM_ABILITY_CAPSULE 599
+
+//All the Vanilla Extra items are placed after the rouge items so that all the hex values are cross compatible between this and normal vanilla
+#define ITEM_VANILLAEXTRA_ITEM_COUNT 22
+
 #define ITEM_ROGUE_ITEM_FIRST   377
 #define ITEM_ROGUE_ITEM_LAST    (ITEM_ROGUE_ITEM_FIRST + 200)
 #define ITEM_ROGUE_ITEM_COUNT   (ITEM_ROGUE_ITEM_LAST - ITEM_ROGUE_ITEM_FIRST + 1)
 
-#define ITEMS_COUNT             (ITEM_ROGUE_ITEM_LAST + 1)
+#define ITEMS_COUNT             (ITEM_ROGUE_ITEM_LAST + ITEM_VANILLAEXTRA_ITEM_COUNT + 1)
 #define ITEM_FIELD_ARROW        ITEMS_COUNT
 
 // Range of berries given out by various NPCS

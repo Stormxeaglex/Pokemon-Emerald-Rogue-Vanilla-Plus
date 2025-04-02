@@ -1549,3 +1549,114 @@ static const u8 sOldSeaMapDesc[] = _(
     "A faded sea chart\n"
     "that shows the way\n"
     "to a certain island.");
+
+// Mints
+static const u8 sLonelyMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups Attack, but\n"
+    "reduces Defense.");
+
+static const u8 sAdamantMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups ATTACK, but\n"
+    "reduces SP. ATK.");
+
+static const u8 sNaughtyMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups ATTACK, but\n"
+    "reduces SP. DEF.");
+
+static const u8 sBraveMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups ATTACK, but\n"
+    "reduces SPEED.");
+
+static const u8 sBoldMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups DEFENSE, but\n"
+    "reduces ATTACK.");
+
+static const u8 sImpishMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups DEFENSE, but\n"
+    "reduces SP. ATK.");
+
+static const u8 sLaxMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups DEFENSE, but\n"
+    "reduces SP. DEF.");
+
+static const u8 sRelaxedMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups DEFENSE, but\n"
+    "reduces SPEED.");
+
+static const u8 sModestMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. ATK, but\n"
+    "reduces ATTACK.");
+
+static const u8 sMildMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. ATK, but\n"
+    "reduces DEFENSE.");
+
+static const u8 sRashMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. ATK, but\n"
+    "reduces SP. DEF.");
+
+static const u8 sQuietMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. ATK, but\n"
+    "reduces SPEED.");
+
+static const u8 sCalmMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. DEF, but\n"
+    "reduces ATTACK.");
+
+static const u8 sGentleMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. DEF, but\n"
+    "reduces DEFENSE.");
+
+static const u8 sCarefulMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. DEF, but\n"
+    "reduces SP. ATK.");
+
+static const u8 sSassyMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SP. DEF, but\n"
+    "reduces SPEED.");
+
+static const u8 sTimidMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SPEED, but\n"
+    "reduces ATTACK.");
+
+static const u8 sHastyMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SPEED, but\n"
+    "reduces DEFENSE.");
+
+static const u8 sJollyMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SPEED, but\n"
+    "reduces Sp. Atk.");
+
+static const u8 sNaiveMintDesc[] = _(
+    "Can be smelled. It\n"
+    "ups SPEED, but\n"
+    "reduces SP. DEF.");
+
+static const u8 sSeriousMintDesc[] = _(
+    "Can be smelled. It\n"
+    "will make all stats\n"
+    "grow equally.");
+
+// Ability Modifiers
+static const u8 sAbilityCapsuleDesc[] = _(
+    "Switches a\n"
+    "POKéMON's ability.");

@@ -401,6 +401,30 @@ const u32 *const gItemIconTable[][2] =
     // Emerald-only key items
     [ITEM_MAGMA_EMBLEM] = {gItemIcon_MagmaEmblem, gItemIconPalette_MagmaEmblem},
     [ITEM_OLD_SEA_MAP] = {gItemIcon_OldSeaMap, gItemIconPalette_OldSeaMap},
+    // Mints
+    [ITEM_LONELY_MINT] = {gItemIcon_Mint, gItemIconPalette_RedMint},
+    [ITEM_ADAMANT_MINT] = {gItemIcon_Mint, gItemIconPalette_RedMint},
+    [ITEM_NAUGHTY_MINT] = {gItemIcon_Mint, gItemIconPalette_RedMint},
+    [ITEM_BRAVE_MINT] = {gItemIcon_Mint, gItemIconPalette_RedMint},
+    [ITEM_BOLD_MINT] = {gItemIcon_Mint, gItemIconPalette_BlueMint},
+    [ITEM_IMPISH_MINT] = {gItemIcon_Mint, gItemIconPalette_BlueMint},
+    [ITEM_LAX_MINT] = {gItemIcon_Mint, gItemIconPalette_BlueMint},
+    [ITEM_RELAXED_MINT] = {gItemIcon_Mint, gItemIconPalette_BlueMint},
+    [ITEM_MODEST_MINT] = {gItemIcon_Mint, gItemIconPalette_LightBlueMint},
+    [ITEM_MILD_MINT] = {gItemIcon_Mint, gItemIconPalette_LightBlueMint},
+    [ITEM_RASH_MINT] = {gItemIcon_Mint, gItemIconPalette_LightBlueMint},
+    [ITEM_QUIET_MINT] = {gItemIcon_Mint, gItemIconPalette_LightBlueMint},
+    [ITEM_CALM_MINT] = {gItemIcon_Mint, gItemIconPalette_PinkMint},
+    [ITEM_GENTLE_MINT] = {gItemIcon_Mint, gItemIconPalette_PinkMint},
+    [ITEM_CAREFUL_MINT] = {gItemIcon_Mint, gItemIconPalette_PinkMint},
+    [ITEM_SASSY_MINT] = {gItemIcon_Mint, gItemIconPalette_PinkMint},
+    [ITEM_TIMID_MINT] = {gItemIcon_Mint, gItemIconPalette_GreenMint},
+    [ITEM_HASTY_MINT] = {gItemIcon_Mint, gItemIconPalette_GreenMint},
+    [ITEM_JOLLY_MINT] = {gItemIcon_Mint, gItemIconPalette_GreenMint},
+    [ITEM_NAIVE_MINT] = {gItemIcon_Mint, gItemIconPalette_GreenMint},
+    [ITEM_SERIOUS_MINT] = {gItemIcon_Mint, gItemIconPalette_YellowMint},
+    // Ability Modifiers
+    [ITEM_ABILITY_CAPSULE] = {gItemIcon_AbilityCapsule, gItemIconPalette_AbilityCapsule},
     // Return to field arrow
     [ITEM_FIELD_ARROW] = {gItemIcon_ReturnToFieldArrow, gItemIconPalette_ReturnToFieldArrow},
 };

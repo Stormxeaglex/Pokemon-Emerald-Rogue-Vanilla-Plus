@@ -4331,6 +4331,18 @@ extern const u32 gItemIcon_MagmaEmblem[];
 extern const u32 gItemIconPalette_MagmaEmblem[];
 extern const u32 gItemIcon_OldSeaMap[];
 extern const u32 gItemIconPalette_OldSeaMap[];
+// Mints
+extern const u32 gItemIcon_Mint[];
+extern const u32 gItemIconPalette_RedMint[];
+extern const u32 gItemIconPalette_BlueMint[];
+extern const u32 gItemIconPalette_LightBlueMint[];
+extern const u32 gItemIconPalette_PinkMint[];
+extern const u32 gItemIconPalette_GreenMint[];
+extern const u32 gItemIconPalette_YellowMint[];
+// Ability Modifiers
+extern const u32 gItemIcon_AbilityCapsule[];
+extern const u32 gItemIconPalette_AbilityCapsule[];
+
 
 extern const u32 gItemIcon_RogueCharm[];
 extern const u32 gItemIconPalette_RogueCharm[];

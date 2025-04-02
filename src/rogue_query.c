@@ -1285,8 +1285,9 @@ static bool8 Query_IsGeneralShopItem(u16 itemId)
     case ITEM_CARBOS:
     case ITEM_CALCIUM:
     case ITEM_ZINC:
-#ifdef ROGUE_EXPANSION
     case ITEM_ABILITY_CAPSULE:
+#ifdef ROGUE_EXPANSION
+
     case ITEM_ABILITY_PATCH:
 #endif
 
@@ -1297,12 +1298,13 @@ static bool8 Query_IsGeneralShopItem(u16 itemId)
     if(itemId >= ITEM_RED_NECTAR && itemId <= ITEM_PURPLE_NECTAR)
         return FALSE;
 
-    if(itemId >= ITEM_LONELY_MINT && itemId <= ITEM_SERIOUS_MINT)
-        return FALSE;
+
 
     if(itemId >= ITEM_HEALTH_FEATHER && itemId <= ITEM_SWIFT_FEATHER)
         return FALSE;
 #endif
+    if(itemId >= ITEM_LONELY_MINT && itemId <= ITEM_SERIOUS_MINT)
+        return FALSE;
 
     return TRUE;
 }
