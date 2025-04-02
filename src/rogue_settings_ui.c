@@ -1999,12 +1999,13 @@ static void DrawDescriptionOptionMenuText(u8 submenu, u8 selection)
         
         if(gSaveBlock2Ptr->optionsDifficultyRewardMode == OPTIONS_DIFFICULTY_REWARD_MODE_MULTIPLIER)
         {
+            const u8* rewardIndicator;
             //Get multiplier
             float multiplier = Rogue_CalculateRewardMultiplier();
             ConvertFloatToDecimalStringN(gStringVar2, multiplier, 1);
 
             //I could've just used the switch method, but for some reason it won't update correctly when I change the toggles
-            const u8* rewardIndicator = sText_IndicatorEasy;
+            rewardIndicator = sText_IndicatorEasy;
             if(multiplier <= 1.5)
             {
                 rewardIndicator = sText_IndicatorEasy;
