@@ -937,7 +937,7 @@ static u16 SanitizeItemId(u16 itemId)
         return ITEM_NONE;
 #endif
 
-    if (itemId >= ITEMS_COUNT)
+    if (itemId > ITEMS_COUNT)
         return ITEM_NONE;
     else
         return itemId;
