@@ -223,7 +223,6 @@ static void ConfirmToss(u8);
 static void CancelToss(u8);
 static void ConfirmSell(u8);
 static void CancelSell(u8);
-static bool8 isQuickMode = FALSE;
 
 
 // Key item wheel
