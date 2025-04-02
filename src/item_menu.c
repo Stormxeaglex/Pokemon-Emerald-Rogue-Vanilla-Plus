@@ -223,7 +223,6 @@ static void ConfirmToss(u8);
 static void CancelToss(u8);
 static void ConfirmSell(u8);
 static void CancelSell(u8);
-static bool8 isQuickMode = FALSE;
 
 // Key item wheel
 static void Task_KeyItemWheel(u8 taskId);
@@ -565,7 +564,6 @@ enum {
     COLORID_NORMAL,
     COLORID_POCKET_NAME,
     COLORID_GRAY_CURSOR,
-    COLORID_RED_CURSOR,
     COLORID_BAG_CAPACITY,
     COLORID_TMHM_INFO,
     COLORID_NONE = 0xFF
@@ -575,7 +573,6 @@ static const u8 sFontColorTable[][3] = {
     [COLORID_NORMAL]      = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
     [COLORID_POCKET_NAME] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_RED},
     [COLORID_GRAY_CURSOR] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_GREEN},
-    [COLORID_RED_CURSOR] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_RED, TEXT_COLOR_GREEN},
     [COLORID_BAG_CAPACITY]= {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_LIGHT_GRAY},
     [COLORID_TMHM_INFO]   = {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_5,  TEXT_DYNAMIC_COLOR_1}
 };
@@ -1506,7 +1503,6 @@ static void Task_CloseBagMenu(u8 taskId)
         else
             SetMainCallback2(gBagPosition.exitCallback);
 
-        isQuickMode = FALSE; //Reset
         BagDestroyPocketScrollArrowPair();
         ResetSpriteData();
         FreeAllSpritePalettes();
@@ -1650,19 +1646,9 @@ static void Task_BagMenu_HandleInput(u8 taskId)
             }
             break;
         }
-        if (JOY_NEW(START_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            isQuickMode = !isQuickMode; 
-        }
+
         listPosition = ListMenu_ProcessInput(tListTaskId);
         ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
-
-        if (isQuickMode == TRUE)
-            BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-        else
-            BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
-
         switch (listPosition)
         {
         case LIST_NOTHING_CHOSEN:
@@ -2398,11 +2384,6 @@ static void ItemMenu_Toss(u8 taskId)
     {
         AskTossItems(taskId);
     }
-    else if (isQuickMode == TRUE)
-    {
-        tItemCount = tQuantity;
-        AskTossItems(taskId);
-    }
     else
     {
         CopyItemName(gSpecialVar_ItemId, gStringVar1);
@@ -2434,10 +2415,7 @@ static void CancelToss(u8 taskId)
     s16* data = gTasks[taskId].data;
 
     PrintItemDescription(tListPosition);
-    if (isQuickMode == TRUE)
-        BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-    else
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+    BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
     ReturnToItemList(taskId);
 }
 
@@ -2660,10 +2638,7 @@ static void ItemMenu_Cancel(u8 taskId)
     PrintItemDescription(tListPosition);
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
-    if (isQuickMode == TRUE)
-        BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-    else
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+    BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
     ReturnToItemList(taskId);
 }
 
@@ -2922,12 +2897,6 @@ static void Task_ItemContext_Sell(u8 taskId)
             DisplayCurrentMoneyWindow();
             DisplaySellItemPriceAndConfirm(taskId);
         }
-        else if (isQuickMode == TRUE)
-        {
-            DisplayCurrentMoneyWindow();
-            tItemCount = tQuantity;
-            DisplaySellItemPriceAndConfirm(taskId);
-        }
         else
         {
             CopyItemName(gSpecialVar_ItemId, gStringVar2);
@@ -2957,10 +2926,7 @@ static void CancelSell(u8 taskId)
 
     RemoveMoneyWindow();
     RemoveItemMessageWindow(ITEMWIN_MESSAGE);
-    if (isQuickMode == TRUE)
-        BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-    else
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+    BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
     ReturnToItemList(taskId);
 }
 
@@ -2991,10 +2957,7 @@ static void Task_ChooseHowManyToSell(u8 taskId)
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (isQuickMode == TRUE)
-            BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-        else
-            BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
         RemoveMoneyWindow();
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY_WIDE);
         RemoveItemMessageWindow(ITEMWIN_MESSAGE);
@@ -3029,10 +2992,6 @@ static void SellItem(u8 taskId)
     BagMenu_PrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
     PrintMoneyAmountInMoneyBox(gBagMenu->windowIds[ITEMWIN_MONEY], GetMoney(&gSaveBlock1Ptr->money), 0);
     gTasks[taskId].func = WaitAfterItemSell;
-    if (isQuickMode == TRUE)
-        BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-    else
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
 }
 
 static void WaitAfterItemSell(u8 taskId)
@@ -3083,10 +3042,7 @@ static void Task_ChooseHowManyToDeposit(u8 taskId)
     {
         PlaySE(SE_SELECT);
         PrintItemDescription(tListPosition);
-        if (isQuickMode == TRUE)
-            BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-        else
-            BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
         ReturnToItemList(taskId);
     }
@@ -3129,10 +3085,7 @@ static void WaitDepositErrorMessage(u8 taskId)
         PlaySE(SE_SELECT);
         PrintItemDescription(tListPosition);
         PrintBagCapacity();
-        if (isQuickMode == TRUE)
-            BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-        else
-            BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
         ReturnToItemList(taskId);
     }
 }
@@ -3298,10 +3251,7 @@ static void SortBagBy(u8 taskId, u8 sortMode)
     //PrintItemDescription(tListPosition);
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
-    if (isQuickMode == TRUE)
-        BagMenu_PrintCursor(tListTaskId, COLORID_RED_CURSOR);
-    else
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
+    BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
     ReturnToItemList(taskId);
 }
 
