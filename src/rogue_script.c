@@ -1174,7 +1174,7 @@ void Mocha_FollowMonRideCheck()
 {
     if(CheckBagHasItem(ITEM_BASIC_RIDING_WHISTLE, 1) == TRUE && Overworld_IsBikingAllowed() == TRUE)
     {   
-        u16 species = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG);
+        u16 species = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES2);
         gSpecialVar_Result = Rogue_IsValidRideSpecies(species);
     }
     else
