@@ -223,7 +223,7 @@ static void ConfirmToss(u8);
 static void CancelToss(u8);
 static void ConfirmSell(u8);
 static void CancelSell(u8);
-static bool8 isQuickMode = FALSE;
+
 
 // Key item wheel
 static void Task_KeyItemWheel(u8 taskId);
@@ -820,6 +820,7 @@ static EWRAM_DATA bool8 sTempDisableDescriptionPrint = FALSE; // HACK
 // This could be 12 bytes smaller if we used AllocZeroed,
 // but that isn't really a lot of space
 static EWRAM_DATA u16 sKeyItemWheelExtraPalette[16] = {0};
+static EWRAM_DATA bool8 isQuickMode = FALSE;
 
 void ResetBagScrollPositions(void)
 {
