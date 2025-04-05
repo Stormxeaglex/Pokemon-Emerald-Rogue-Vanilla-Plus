@@ -5081,9 +5081,9 @@ static u8 SelectRouteRoom_CalculateWeight(u16 index, u16 routeId, void* data, bo
     // Basegame already has duplicated types anyway. It's only more noticeable here due to the fact that we're limited with 6 maps
     else if (HistoryBufferContains(&gRogueAdvPath.routeHistoryBuffer[0], ARRAY_COUNT(gRogueAdvPath.routeHistoryBuffer), routeId))
     {
-         u8 quickRoutesUsedCount = 0;
-
-        for (u8 i = gRogueRouteTable.routeCount - 6; i < gRogueRouteTable.routeCount; ++i)
+        u8 quickRoutesUsedCount = 0;
+        u8 i;
+        for (i = gRogueRouteTable.routeCount - 6; i < gRogueRouteTable.routeCount; ++i)
         {
             if (HistoryBufferContains(&gRogueAdvPath.routeHistoryBuffer[0], ARRAY_COUNT(gRogueAdvPath.routeHistoryBuffer), i))
             {
