@@ -5019,8 +5019,9 @@ void Task_NatureMint(u8 taskId)
         tState++;
         break;
     case 4:
-        SetNature(mon, nature);
-        RemoveBagItem(gSpecialVar_ItemId, 1);
+        //Commenting these out might fix the double removal nature mint use bug
+        //SetNature(mon, nature);
+        //RemoveBagItem(gSpecialVar_ItemId, 1);
         StringExpandPlaceholders(gStringVar4, doneText);
         DisplayPartyMenuMessage(gStringVar4, 1);
         ScheduleBgCopyTilemapToVram(2);
