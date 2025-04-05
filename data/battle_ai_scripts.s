@@ -2266,15 +2266,25 @@ AI_CV_FocusPunch:
 	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_FocusPunch3
 	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_FocusPunch3
 	is_first_turn_for AI_USER
-	if_not_equal 0, AI_CV_FocusPunch_End
-	if_random_less_than 100, AI_CV_FocusPunch_End
+	if_not_equal 0, AI_CV_FocusPunch_End @if it's the first turn jump to end
+	get_last_used_bank_move AI_TARGET @addition! Makes it so opponent
+	get_move_power_from_result
+	if_not_equal 0, AI_CV_FocusPunchPunish1
+	get_last_used_bank_move AI_TARGET
+	get_move_effect_from_result       @Won't Spam FP against
+	if_equal EFFECT_LEVEL_DAMAGE, AI_CV_FocusPunchPunish1 @Attacking Target
+	if_equal EFFECT_SUPER_FANG, AI_CV_FocusPunchPunish1
+	if_equal EFFECT_ENDEAVOR, AI_CV_FocusPunchPunish1
+	if_random_less_than 100, AI_CV_FocusPunch_End @randomly increase score if not first turn
 	score +1
 	goto AI_CV_FocusPunch_End
 
 AI_CV_FocusPunch2:
 	score -1
 	goto AI_CV_FocusPunch_End
-
+AI_CV_FocusPunchPunish1:
+	score -100
+	goto AI_CV_FocusPunch_End
 AI_CV_FocusPunch3:
 	if_random_less_than 100, AI_CV_FocusPunch_End
 	if_status2 AI_USER, STATUS2_SUBSTITUTE, Score_Plus5
