@@ -367,6 +367,10 @@ extern const u8 gText_SoundLowHealth[];
 extern const u8 gText_Frame[];
 extern const u8 gText_OptionMenuCancel[];
 extern const u8 gText_ButtonMode[];
+extern const u8 gText_TrainerAI[];
+extern const u8 gText_FocusPunchAI[];
+extern const u8 gText_FocusPunchAIVanilla[];
+extern const u8 gText_FocusPunchAICheckIfAttacked[];
 
 extern const u8 gText_MaleSymbol[];
 extern const u8 gText_FemaleSymbol[];

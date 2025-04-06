@@ -36,6 +36,7 @@ enum
     MENUITEM_MENU_GRAPHICS,
     MENUITEM_MENU_UI,
     MENUITEM_MENU_AUDIO,
+    MENUITEM_MENU_TRAINER_AI,
     MENUITEM_TEXTSPEED,
     MENUITEM_BATTLESCENE_WILD_BATTLES,
     MENUITEM_BATTLESCENE_TRAINER_BATTLES,
@@ -53,6 +54,7 @@ enum
     MENUITEM_SOUND_LOW_HEALTH,
     MENUITEM_BUTTONMODE,
     MENUITEM_FRAMETYPE,
+    MENUITEM_FOCUS_PUNCH_AI,
     MENUITEM_CANCEL,
 };
 
@@ -63,6 +65,7 @@ enum
     SUBMENUITEM_GRAPHICS,
     SUBMENUITEM_UI,
     SUBMENUITEM_AUDIO,
+    SUBMENUITEM_TRAINER_AI,
     SUBMENUITEM_COUNT,
 };
 
@@ -115,6 +118,8 @@ static u8 ButtonMode_ProcessInput(u8 menuOffset, u8 selection);
 static void ButtonMode_DrawChoices(u8 menuOffset, u8 selection);
 static u8 FrameType_ProcessInput(u8 menuOffset, u8 selection);
 static void FrameType_DrawChoices(u8 menuOffset, u8 selection);
+static u8 FocusPunchAI_ProcessInput(u8 menuOffset, u8 selection);
+static void FocusPunchAI_DrawChoices(u8 menuOffset, u8 selection);
 static u8 Empty_ProcessInput(u8 menuOffset, u8 selection);
 static void Empty_DrawChoices(u8 menuOffset, u8 selection);
 
@@ -279,7 +284,19 @@ static const struct MenuEntry sOptionMenuItems[] =
         .processInput = FrameType_ProcessInput,
         .drawChoices = FrameType_DrawChoices
     },
-    [MENUITEM_CANCEL] = 
+    [MENUITEM_MENU_TRAINER_AI] =
+    {
+        .itemName = gText_TrainerAI,
+        .processInput = Empty_ProcessInput,
+        .drawChoices = Empty_DrawChoices
+    },
+    [MENUITEM_FOCUS_PUNCH_AI] =
+    {
+        .itemName = gText_FocusPunchAI,
+        .processInput = FocusPunchAI_ProcessInput,
+        .drawChoices = FocusPunchAI_DrawChoices,
+    },
+    [MENUITEM_CANCEL] =
     {
         .itemName = gText_OptionMenuCancel,
         .processInput = Empty_ProcessInput,
@@ -298,6 +315,7 @@ static const struct MenuEntries sOptionMenuEntries[SUBMENUITEM_COUNT] =
             MENUITEM_MENU_GRAPHICS,
             MENUITEM_MENU_UI,
             MENUITEM_MENU_AUDIO,
+            MENUITEM_MENU_TRAINER_AI,
             MENUITEM_CANCEL
         }
     },
@@ -349,7 +367,16 @@ static const struct MenuEntries sOptionMenuEntries[SUBMENUITEM_COUNT] =
             MENUITEM_SOUND_CHANNEL_BATTLE_SE,
             MENUITEM_CANCEL
         }
-    }
+    },
+    [SUBMENUITEM_TRAINER_AI] =
+    {
+        .titleName = gText_TrainerAI,
+        .menuOptions =
+        {
+            MENUITEM_FOCUS_PUNCH_AI,
+            MENUITEM_CANCEL
+        }
+    },
 };
 
 static const struct WindowTemplate sOptionMenuWinTemplates[] =
@@ -557,6 +584,11 @@ static void Task_OptionMenuProcessInput(u8 taskId)
 
         case MENUITEM_MENU_AUDIO:
             submenuSelection = SUBMENUITEM_AUDIO;
+            submenuChanged = TRUE;
+            break;
+
+        case MENUITEM_MENU_TRAINER_AI:
+            submenuSelection = SUBMENUITEM_TRAINER_AI;
             submenuChanged = TRUE;
             break;
         }
@@ -1065,6 +1097,27 @@ static void FrameType_DrawChoices(u8 menuOffset, u8 selection)
     DrawOptionMenuChoice(text, VALUE_X_OFFSET + 24, menuOffset* YPOS_SPACING, 0);
 }
 
+static u8 FocusPunchAI_ProcessInput(u8 menuOffset, u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void FocusPunchAI_DrawChoices(u8 menuOffset, u8 selection)
+{
+    u8 const* options[] =
+    {
+        [OPTIONS_FOCUS_PUNCH_AI_VANILLA] = gText_FocusPunchAIVanilla,
+        [OPTIONS_FOCUS_PUNCH_AI_CHECK_IF_ATTACKED] = gText_FocusPunchAICheckIfAttacked,
+    };
+    DrawChoiceSelection(menuOffset, selection, options, ARRAY_COUNT(options));
+}
+
 static u8 ButtonMode_ProcessInput(u8 menuOffset, u8 selection)
 {
     if (JOY_NEW(DPAD_RIGHT))
@@ -1201,6 +1254,9 @@ static u8 GetMenuItemValue(u8 menuItem)
         
     case MENUITEM_FRAMETYPE:
         return gSaveBlock2Ptr->optionsWindowFrameType;
+
+    case MENUITEM_FOCUS_PUNCH_AI:
+        return gSaveBlock2Ptr->optionsFocusPunchAI;
     }
 
     return 0;
@@ -1291,6 +1347,10 @@ static void SetMenuItemValue(u8 menuItem, u8 value)
         
     case MENUITEM_FRAMETYPE:
         gSaveBlock2Ptr->optionsWindowFrameType = value;
+        break;
+
+    case MENUITEM_FOCUS_PUNCH_AI:
+        gSaveBlock2Ptr->optionsFocusPunchAI = value;
         break;
     }
 }

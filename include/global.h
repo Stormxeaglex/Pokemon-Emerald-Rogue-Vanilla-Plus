@@ -543,7 +543,9 @@ struct SaveBlock2
              u32 seasonVisuals:1;
              u32 weatherVisuals:1;
              u32 regionMapZoom:1; // whether the map is zoomed in
-             u32 settingsReserved:25; // unused/reserved bits
+             u32 settingsReserved:24; // unused/reserved bits
+             u32 optionsFocusPunchAI:1; //OPTIONS_FOCUS_PUNCH_AI[VANILLA/LAST_MOVE]
+             u32 unusedStuff:30;
     /*0x18*/ struct Pokedex pokedex;
              s8 playerStyles[8];
              u32 playerOutfitUnlockFlags;

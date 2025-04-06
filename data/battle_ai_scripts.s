@@ -6,6 +6,8 @@
 #include "constants/battle_move_effects.h"
 #include "constants/hold_effects.h"
 #include "constants/pokemon.h"
+#include "constants/global.h"
+#include "constants/ai_options.h"
 	.include "asm/macros/battle_ai_script.inc"
 	.include "constants/constants.inc"
 
@@ -2260,32 +2262,36 @@ AI_CV_Facade_End:
 	end
 
 AI_CV_FocusPunch:
-	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_FocusPunch2
-	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_FocusPunch2
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_FocusPunch3
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_FocusPunch3
 	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_FocusPunch_ScoreUp1
-	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_FocusPunch3
-	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_FocusPunch3
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_FocusPunch4
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_FocusPunch4
 	is_first_turn_for AI_USER
 	if_not_equal 0, AI_CV_FocusPunch_End @if it's the first turn jump to end
-	get_last_used_bank_move AI_TARGET @addition! Makes it so opponent
-	get_move_power_from_result
-	if_not_equal 0, AI_CV_FocusPunchPunish1
+AI_CV_FocusPunchNewAI:
+	get_ai_option OPTION_FOCUS_PUNCH_AI @Check for Focus Punch AI option
+	if_not_equal OPTIONS_FOCUS_PUNCH_AI_CHECK_IF_ATTACKED, AI_CV_FocusPunch2 @skip if not ON
+	get_last_used_bank_move AI_TARGET		@addition! Makes it so opponent
+	get_move_power_from_result				@Won't Spam FP against
+	if_not_equal 0, AI_CV_FocusPunchPunish1	@Attacking Target
 	get_last_used_bank_move AI_TARGET
-	get_move_effect_from_result       @Won't Spam FP against
-	if_equal EFFECT_LEVEL_DAMAGE, AI_CV_FocusPunchPunish1 @Attacking Target
+	get_move_effect_from_result
+	if_equal EFFECT_LEVEL_DAMAGE, AI_CV_FocusPunchPunish1
 	if_equal EFFECT_SUPER_FANG, AI_CV_FocusPunchPunish1
 	if_equal EFFECT_ENDEAVOR, AI_CV_FocusPunchPunish1
+AI_CV_FocusPunch2:
 	if_random_less_than 100, AI_CV_FocusPunch_End @randomly increase score if not first turn
 	score +1
 	goto AI_CV_FocusPunch_End
 
-AI_CV_FocusPunch2:
+AI_CV_FocusPunch3:
 	score -1
 	goto AI_CV_FocusPunch_End
 AI_CV_FocusPunchPunish1:
 	score -100
 	goto AI_CV_FocusPunch_End
-AI_CV_FocusPunch3:
+AI_CV_FocusPunch4:
 	if_random_less_than 100, AI_CV_FocusPunch_End
 	if_status2 AI_USER, STATUS2_SUBSTITUTE, Score_Plus5
 AI_CV_FocusPunch_ScoreUp1:

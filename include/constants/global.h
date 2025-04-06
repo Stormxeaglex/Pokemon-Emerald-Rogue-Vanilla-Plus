@@ -169,6 +169,13 @@
 #define OPTIONS_NICKNAME_RANDOM             3
 #define OPTIONS_NICKNAME_COUNT              4
 
+// Vanilla Plus Additions
+
+#define OPTIONS_FOCUS_PUNCH_AI_VANILLA 0
+#define OPTIONS_FOCUS_PUNCH_AI_CHECK_IF_ATTACKED  1
+
+// Vanilla Plus Additions end
+
 #define DIR_NONE        0
 #define DIR_SOUTH       1
 #define DIR_NORTH       2
