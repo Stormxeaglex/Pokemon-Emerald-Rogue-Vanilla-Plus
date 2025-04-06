@@ -39,6 +39,7 @@ enum
     MENUITEM_MENU_GRAPHICS,
     MENUITEM_MENU_UI,
     MENUITEM_MENU_AUDIO,
+    MENUITEM_MENU_TRAINER_AI,
     MENUITEM_MENU_MOCHA_QOL,
     MENUITEM_TEXTSPEED,
     MENUITEM_BATTLESCENE_WILD_BATTLES,
@@ -62,6 +63,7 @@ enum
     MENUITEM_SHOW_MONEY,
     MENUITEM_QUICK_ROUTE,
     MENUITEM_IGNORE_BAG,
+    MENUITEM_FOCUS_PUNCH_AI,
     MENUITEM_CANCEL,
 };
 
@@ -72,6 +74,7 @@ enum
     SUBMENUITEM_GRAPHICS,
     SUBMENUITEM_UI,
     SUBMENUITEM_AUDIO,
+    SUBMENUITEM_TRAINER_AI,
     SUBMENUITEM_MOCHA_QOL,
     SUBMENUITEM_COUNT,
 };
@@ -125,6 +128,10 @@ static u8 ButtonMode_ProcessInput(u8 menuOffset, u8 selection);
 static void ButtonMode_DrawChoices(u8 menuOffset, u8 selection);
 static u8 FrameType_ProcessInput(u8 menuOffset, u8 selection);
 static void FrameType_DrawChoices(u8 menuOffset, u8 selection);
+static u8 FocusPunchAI_ProcessInput(u8 menuOffset, u8 selection);
+static void FocusPunchAI_DrawChoices(u8 menuOffset, u8 selection);
+static u8 Empty_ProcessInput(u8 menuOffset, u8 selection);
+static void Empty_DrawChoices(u8 menuOffset, u8 selection);
 static u8 DifficultyReward_ProcessInput(u8 menuOffset, u8 selection);
 static void DifficultyReward_DrawChoices(u8 menuOffset, u8 selection);
 static u8 RidemonControl_ProcessInput(u8 menuOffset, u8 selection);
@@ -135,8 +142,6 @@ static u8 QuickRoute_ProcessInput(u8 menuOffset, u8 selection);
 static void QuickRoute_DrawChoices(u8 menuOffset, u8 selection);
 static u8 IgnoreBag_ProcessInput(u8 menuOffset, u8 selection);
 static void IgnoreBag_DrawChoices(u8 menuOffset, u8 selection);
-static u8 Empty_ProcessInput(u8 menuOffset, u8 selection);
-static void Empty_DrawChoices(u8 menuOffset, u8 selection);
 
 EWRAM_DATA static bool8 sArrowPressed = FALSE;
 
@@ -299,6 +304,18 @@ static const struct MenuEntry sOptionMenuItems[] =
         .processInput = FrameType_ProcessInput,
         .drawChoices = FrameType_DrawChoices
     },
+    [MENUITEM_MENU_TRAINER_AI] =
+    {
+        .itemName = gText_TrainerAI,
+        .processInput = Empty_ProcessInput,
+        .drawChoices = Empty_DrawChoices
+    },
+    [MENUITEM_FOCUS_PUNCH_AI] =
+    {
+        .itemName = gText_FocusPunchAI,
+        .processInput = FocusPunchAI_ProcessInput,
+        .drawChoices = FocusPunchAI_DrawChoices,
+    },
     [MENUITEM_MENU_MOCHA_QOL] =
     {
         .itemName = gText_MochaQoL,
@@ -335,7 +352,7 @@ static const struct MenuEntry sOptionMenuItems[] =
         .processInput = IgnoreBag_ProcessInput,
         .drawChoices = IgnoreBag_DrawChoices,
     },
-    [MENUITEM_CANCEL] = 
+    [MENUITEM_CANCEL] =
     {
         .itemName = gText_OptionMenuCancel,
         .processInput = Empty_ProcessInput,
@@ -354,6 +371,7 @@ static const struct MenuEntries sOptionMenuEntries[SUBMENUITEM_COUNT] =
             MENUITEM_MENU_GRAPHICS,
             MENUITEM_MENU_UI,
             MENUITEM_MENU_AUDIO,
+            MENUITEM_MENU_TRAINER_AI,
             MENUITEM_MENU_MOCHA_QOL,
             MENUITEM_CANCEL
         }
@@ -404,6 +422,15 @@ static const struct MenuEntries sOptionMenuEntries[SUBMENUITEM_COUNT] =
             MENUITEM_SOUND_CHANNEL_BGM,
             MENUITEM_SOUND_CHANNEL_SE,
             MENUITEM_SOUND_CHANNEL_BATTLE_SE,
+            MENUITEM_CANCEL
+        }
+    },
+    [SUBMENUITEM_TRAINER_AI] =
+    {
+        .titleName = gText_TrainerAI,
+        .menuOptions =
+        {
+            MENUITEM_FOCUS_PUNCH_AI,
             MENUITEM_CANCEL
         }
     },
@@ -630,6 +657,12 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             submenuSelection = SUBMENUITEM_AUDIO;
             submenuChanged = TRUE;
             break;
+
+        case MENUITEM_MENU_TRAINER_AI:
+            submenuSelection = SUBMENUITEM_TRAINER_AI;
+            submenuChanged = TRUE;
+            break;
+
         case MENUITEM_MENU_MOCHA_QOL:
             submenuSelection = SUBMENUITEM_MOCHA_QOL;
             submenuChanged = TRUE;
@@ -1246,6 +1279,27 @@ static void IgnoreBag_DrawChoices(u8 menuOffset, u8 selection)
     DrawChoiceSelection(menuOffset, selection, options, ARRAY_COUNT(options));
 }
 
+static u8 FocusPunchAI_ProcessInput(u8 menuOffset, u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void FocusPunchAI_DrawChoices(u8 menuOffset, u8 selection)
+{
+    u8 const* options[] =
+    {
+        [OPTIONS_FOCUS_PUNCH_AI_VANILLA] = gText_FocusPunchAIVanilla,
+        [OPTIONS_FOCUS_PUNCH_AI_CHECK_IF_ATTACKED] = gText_FocusPunchAICheckIfAttacked,
+    };
+    DrawChoiceSelection(menuOffset, selection, options, ARRAY_COUNT(options));
+}
+
 
 static u8 ButtonMode_ProcessInput(u8 menuOffset, u8 selection)
 {
@@ -1398,6 +1452,9 @@ static u8 GetMenuItemValue(u8 menuItem)
 
     case MENUITEM_IGNORE_BAG:
         return gSaveBlock2Ptr->optionsIgnoreBag;
+
+    case MENUITEM_FOCUS_PUNCH_AI:
+        return gSaveBlock2Ptr->optionsFocusPunchAI;
     }
 
     return 0;
@@ -1508,6 +1565,10 @@ static void SetMenuItemValue(u8 menuItem, u8 value)
 
     case MENUITEM_IGNORE_BAG:
         gSaveBlock2Ptr->optionsIgnoreBag = value;
+        break;
+
+    case MENUITEM_FOCUS_PUNCH_AI:
+        gSaveBlock2Ptr->optionsFocusPunchAI = value;
         break;
     }
 }

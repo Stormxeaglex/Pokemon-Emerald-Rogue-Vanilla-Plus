@@ -550,6 +550,12 @@
 	.2byte \param1
 	.4byte \param2
 	.endm
+
+	.macro get_ai_option option:req
+	.byte 0x63
+	.byte \option
+	.endm
+
 	
 @ useful script macros
 	.macro get_curr_move_type

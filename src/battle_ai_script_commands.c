@@ -14,6 +14,7 @@
 #include "constants/battle_ai.h"
 #include "constants/battle_move_effects.h"
 #include "constants/moves.h"
+#include "ai_options.h"
 
 #include "rogue_controller.h"
 
@@ -154,6 +155,7 @@ static void Cmd_is_of_type(void);
 static void Cmd_if_target_is_ally(void);
 static void Cmd_if_flash_fired(void);
 static void Cmd_if_holds_item(void);
+static void Cmd_get_ai_option(void);
 
 // ewram
 EWRAM_DATA const u8 *gAIScriptPtr = NULL;
@@ -263,6 +265,7 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_check_ability,                              // 0x60
     Cmd_if_flash_fired,                             // 0x61
     Cmd_if_holds_item,                              // 0x62
+    Cmd_get_ai_option,                              // 0x63
 };
 
 // For the purposes of determining the most powerful move in a moveset, these
@@ -2077,6 +2080,14 @@ static void Cmd_if_holds_item(void)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 4);
     else
         gAIScriptPtr += 8;
+}
+
+static void Cmd_get_ai_option(void)
+{
+    u8 optionIndex = gAIScriptPtr[1]; // Read parameter from script
+    u32 optionValue = GetAIOptionValue(optionIndex);
+    AI_THINKING_STRUCT->funcResult = GetAIOptionValue(optionIndex); //returns the specified options value
+    gAIScriptPtr += 2; // Advance past opcode (1 byte) + optionIndex (1 byte)
 }
 
 static void Cmd_get_gender(void)
